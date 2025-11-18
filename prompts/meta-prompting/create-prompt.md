@@ -1,12 +1,13 @@
 ---
 description: Expert prompt engineer that creates optimized, XML-structured prompts with intelligent depth selection
 argument-hint: [task description]
-allowed-tools: [Read, Write, Bash(ls:*), Bash(mkdir:*), SlashCommand, AskUserQuestion]
+allowed-tools: [Read, Write, Glob, SlashCommand, AskUserQuestion]
 ---
 
 <context>
-Next prompt number: !`ls ./prompts/*.md 2>/dev/null | grep -oE '^[0-9]+' | sort -n | tail -1`
-Prompts directory: !`[ -d ./prompts ] && echo "exists" || echo "missing"`
+Before generating prompts, use the Glob tool to check `./prompts/*.md` to:
+1. Determine if the prompts directory exists
+2. Find the highest numbered prompt to determine next sequence number
 </context>
 
 <objective>
@@ -456,8 +457,8 @@ If user chooses #2, invoke via SlashCommand tool: `/run-prompt 005`
 
 - **Intake first**: Complete step_0_intake_gate before generating. Use AskUserQuestion for structured clarification.
 - **Decision gate loop**: Keep asking questions until user selects "Proceed"
-- Read `!ls ./prompts/ 2>/dev/null | sort -V | tail -1` to determine the next number in sequence
-- If ./prompts/ doesn't exist, create it with `!mkdir -p ./prompts/` before saving
+- Use Glob tool with `./prompts/*.md` to find existing prompts and determine next number in sequence
+- If ./prompts/ doesn't exist, use Write tool to create the first prompt (Write will create parent directories)
 - Keep prompt filenames descriptive but concise
 - Adapt the XML structure to fit the task - not every tag is needed every time
 - Consider the user's working directory as the root for all relative paths
