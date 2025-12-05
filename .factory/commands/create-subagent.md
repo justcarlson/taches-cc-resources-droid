@@ -1,0 +1,6 @@
+---
+description: Create specialized Claude Code subagents with expert guidance
+argument-hint: [agent idea or description]
+---
+
+Invoke the create-subagents skill for: $ARGUMENTS
