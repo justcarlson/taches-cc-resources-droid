@@ -63,7 +63,7 @@ For each prompt number/name:
 <single_prompt>
 
 1. Read the complete contents of the prompt file
-2. Delegate as sub-task using Task tool with subagent_type="general-purpose"
+2. Delegate as sub-task using Task tool with droid_type="general-purpose"
 3. Wait for completion
 4. Archive prompt to `./prompts/completed/` with metadata
 5. Commit all work:

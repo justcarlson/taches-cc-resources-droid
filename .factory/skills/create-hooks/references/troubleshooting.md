@@ -23,22 +23,22 @@ Look for:
 **2. Check hook file location**
 
 Hooks must be in:
-- Project: `.claude/hooks.json`
-- User: `~/.claude/hooks.json`
+- Project: `.factory/hooks.json`
+- User: `~/.factory/hooks.json`
 - Plugin: `{plugin}/hooks.json`
 
 Verify:
 ```bash
-cat .claude/hooks.json
+cat .factory/hooks.json
 # or
-cat ~/.claude/hooks.json
+cat ~/.factory/hooks.json
 ```
 
 **3. Validate JSON syntax**
 
 Invalid JSON is silently ignored:
 ```bash
-jq . .claude/hooks.json
+jq . .factory/hooks.json
 ```
 
 If error: fix JSON syntax.
@@ -86,11 +86,11 @@ node -e "console.log(/bash/.test('Bash'))"  # false
 
 ### Solutions
 
-**Missing hook file**: Create `.claude/hooks.json` or `~/.claude/hooks.json`
+**Missing hook file**: Create `.factory/hooks.json` or `~/.factory/hooks.json`
 
 **Invalid JSON**: Use `jq` to validate and format:
 ```bash
-jq . .claude/hooks.json > temp.json && mv temp.json .claude/hooks.json
+jq . .factory/hooks.json > temp.json && mv temp.json .factory/hooks.json
 ```
 
 **Wrong matcher**: Check tool names with `--debug` and update matcher
@@ -168,14 +168,14 @@ apt-get install jq
 Use absolute paths:
 ```json
 {
-  "command": "/Users/username/.claude/hooks/script.sh"
+  "command": "/Users/username/.factory/hooks/script.sh"
 }
 ```
 
 Or use environment variables:
 ```json
 {
-  "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/script.sh"
+  "command": "$CLAUDE_PROJECT_DIR/.factory/hooks/script.sh"
 }
 ```
 
@@ -218,7 +218,7 @@ Ensure prompt is clear:
 
 **3. Test prompt manually**
 
-Submit similar prompt to Claude directly to see response format.
+Submit similar prompt to Droid directly to see response format.
 
 ### Common issues
 
@@ -337,7 +337,7 @@ echo "{\"decision\": \"$decision\", \"reason\": \"$reason\"}"
 ## Infinite Loop in Stop Hook
 
 ### Symptom
-Stop hook runs repeatedly, Claude never stops.
+Stop hook runs repeatedly, Droid never stops.
 
 ### Cause
 Hook blocks stop without checking `stop_hook_active` flag.
@@ -433,7 +433,7 @@ chown $USER /path/to/hook.sh
 command="./script.sh"
 
 # Use
-command="$CLAUDE_PROJECT_DIR/.claude/hooks/script.sh"
+command="$CLAUDE_PROJECT_DIR/.factory/hooks/script.sh"
 ```
 
 ---

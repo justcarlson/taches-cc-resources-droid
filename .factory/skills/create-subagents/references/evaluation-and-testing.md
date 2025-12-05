@@ -1,4 +1,4 @@
-# Evaluation and Testing for Subagents
+# Evaluation and Testing for Droids
 
 <evaluation_framework>
 
@@ -7,15 +7,15 @@
 **Primary metric**: Proportion of tasks completed correctly and satisfactorily.
 
 Measure:
-- Did the subagent complete the requested task?
+- Did the droid complete the requested task?
 - Did it produce the expected output?
 - Would a human consider the task "done"?
 
-**Testing approach**: Create test cases with known expected outcomes, invoke subagent, compare results.
+**Testing approach**: Create test cases with known expected outcomes, invoke droid, compare results.
 </task_completion>
 
 <tool_correctness>
-**Secondary metric**: Whether subagent calls correct tools for given task.
+**Secondary metric**: Whether droid calls correct tools for given task.
 
 Measure:
 - Are tool selections appropriate for the task?
@@ -26,7 +26,7 @@ Measure:
 </tool_correctness>
 
 <output_quality>
-**Quality metric**: Assess quality of subagent-generated outputs.
+**Quality metric**: Assess quality of droid-generated outputs.
 
 Measure:
 - Accuracy of analysis
@@ -38,7 +38,7 @@ Measure:
 </output_quality>
 
 <robustness>
-**Resilience metric**: How well subagent handles failures and edge cases.
+**Resilience metric**: How well droid handles failures and edge cases.
 
 Measure:
 - Graceful handling of missing files
@@ -81,7 +81,7 @@ Evaluate the security review output on a 1-5 scale:
 Think step-by-step about which vulnerabilities were checked and which were missed.
 ```
 
-**Implementation**: Pass subagent output and criteria to Claude, get structured evaluation.
+**Implementation**: Pass droid output and criteria to Droid, get structured evaluation.
 </example>
 
 **When to use**: Complex quality metrics that can't be measured programmatically (thoroughness, insight quality, appropriateness of recommendations).
@@ -99,11 +99,11 @@ Think step-by-step about which vulnerabilities were checked and which were misse
    - Edge cases (boundary conditions, unusual inputs)
    - Error conditions (missing data, tool failures)
    - Adversarial inputs (malformed, malicious)
-2. Invoke subagent with each test case
+2. Invoke droid with each test case
 3. Compare outputs to expected results
 4. Document failures and iterate on prompt
 
-**Example test suite for code-reviewer subagent**:
+**Example test suite for code-reviewer droid**:
 ```markdown
 Test 1 (Happy path): Recent commit with SQL injection vulnerability
 Expected: Identifies SQL injection, provides fix, rates as Critical
@@ -120,7 +120,7 @@ Expected: Identifies pattern despite obfuscation
 </offline_testing>
 
 <simulation>
-**Simulation testing**: Run subagent in realistic but controlled environments.
+**Simulation testing**: Run droid in realistic but controlled environments.
 
 **Use cases**:
 - Testing against historical issues (can it find bugs that were previously fixed?)
@@ -147,7 +147,7 @@ Expected: Identifies pattern despite obfuscation
 <evaluation_driven_development>
 
 
-**Philosophy**: Integrate evaluation throughout subagent lifecycle, not just at validation stage.
+**Philosophy**: Integrate evaluation throughout droid lifecycle, not just at validation stage.
 
 <workflow>
 1. **Initial creation**: Define success criteria before writing prompt
@@ -158,16 +158,16 @@ Expected: Identifies pattern despite obfuscation
 6. **Continuous**: Ongoing evaluation → feedback → refinement cycles
 </workflow>
 
-**Anti-pattern**: Writing subagent, deploying, never measuring effectiveness or iterating.
+**Anti-pattern**: Writing droid, deploying, never measuring effectiveness or iterating.
 
-**Best practice**: Treat subagent prompts as living documents that evolve based on real-world performance data.
+**Best practice**: Treat droid prompts as living documents that evolve based on real-world performance data.
 </evaluation_driven_development>
 
 <testing_checklist>
 
 
 <before_deployment>
-Before deploying a subagent, complete this validation:
+Before deploying a droid, complete this validation:
 
 **Basic functionality**:
 - [ ] Invoke with representative task, verify completion
@@ -219,11 +219,11 @@ Synthetic data generation useful for:
 ```markdown
 Persona: Junior developer
 Task: "Fix the bug where the login page crashes"
-Expected behavior: Subagent provides detailed debugging steps
+Expected behavior: Droid provides detailed debugging steps
 
 Persona: Senior engineer
 Task: "Investigate authentication flow security"
-Expected behavior: Subagent performs deep security analysis
+Expected behavior: Droid performs deep security analysis
 ```
 
 **Scenario simulation**: Generate variations of common scenarios.
@@ -255,14 +255,14 @@ Maintain a validation set of real usage examples. Synthetic data can miss:
 
 
 <basic_pattern>
-Use LLM to evaluate subagent outputs when human review is impractical at scale.
+Use LLM to evaluate droid outputs when human review is impractical at scale.
 
 **Example evaluation prompt**:
 ```markdown
-You are evaluating a security code review performed by an AI subagent.
+You are evaluating a security code review performed by an AI droid.
 
 Review output:
-{subagent_output}
+{droid_output}
 
 Code that was reviewed:
 {code}
@@ -288,8 +288,8 @@ Expected vulnerabilities in test code:
 2. XSS vulnerability on line 67
 3. Missing authentication check on line 103
 
-Subagent identified:
-{subagent_findings}
+Droid identified:
+{droid_findings}
 
 Calculate:
 - Precision: % of identified issues that are real
@@ -305,15 +305,15 @@ Calculate:
 Anthropic guidance: "Test-driven development becomes even more powerful with agentic coding."
 
 <approach>
-**Before writing subagent prompt**:
+**Before writing droid prompt**:
 1. Define expected input/output pairs
-2. Create test cases that subagent must pass
+2. Create test cases that droid must pass
 3. Write initial prompt
 4. Run tests, observe failures
 5. Refine prompt based on failures
 6. Repeat until all tests pass
 
-**Example for test-writer subagent**:
+**Example for test-writer droid**:
 ```markdown
 Test 1:
 Input: Function that adds two numbers
@@ -331,7 +331,7 @@ Expected output: Test file with:
   - Mocked HTTP calls (no real API calls)
 ```
 
-**Invoke subagent → check if outputs match expectations → iterate on prompt.**
+**Invoke droid → check if outputs match expectations → iterate on prompt.**
 </approach>
 
 **Benefit**: Clear acceptance criteria before development, objective measure of prompt quality.
@@ -341,9 +341,9 @@ Expected output: Test file with:
 
 
 <anti_pattern name="no_testing">
-❌ Deploying subagents without any validation
+❌ Deploying droids without any validation
 
-**Risk**: Subagent fails on real tasks, wastes user time, damages trust.
+**Risk**: Droid fails on real tasks, wastes user time, damages trust.
 
 **Fix**: Minimum viable testing = invoke with 3 representative tasks before deploying.
 </anti_pattern>
@@ -351,7 +351,7 @@ Expected output: Test file with:
 <anti_pattern name="only_happy_path">
 ❌ Testing only ideal scenarios
 
-**Risk**: Subagent fails on edge cases, error conditions, or unusual (but valid) inputs.
+**Risk**: Droid fails on edge cases, error conditions, or unusual (but valid) inputs.
 
 **Fix**: Test matrix covering happy path, edge cases, and error conditions.
 </anti_pattern>
@@ -367,7 +367,7 @@ Expected output: Test file with:
 <anti_pattern name="test_once_deploy_forever">
 ❌ Testing once at creation, never revisiting
 
-**Risk**: Subagent degrades over time as usage patterns shift, codebases change, or models update.
+**Risk**: Droid degrades over time as usage patterns shift, codebases change, or models update.
 
 **Fix**: Periodic re-evaluation with current usage patterns and edge cases.
 </anti_pattern>

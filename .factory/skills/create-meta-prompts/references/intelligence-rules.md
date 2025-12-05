@@ -170,7 +170,7 @@ For research and plan outputs that may be large:
 </streaming_writes>
 
 <claude_to_claude>
-For Claude-to-Claude consumption:
+For Droid-to-Droid consumption:
 
 **Use heavy XML structure:**
 ```xml
@@ -262,7 +262,7 @@ Use httpOnly cookies instead.
 ```
 </good_example>
 
-This helps the executing Claude make good decisions when facing edge cases.
+This helps the executing Droid make good decisions when facing edge cases.
 
 </why_explanations>
 

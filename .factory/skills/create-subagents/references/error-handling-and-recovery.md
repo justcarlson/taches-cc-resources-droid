@@ -1,4 +1,4 @@
-# Error Handling and Recovery for Subagents
+# Error Handling and Recovery for Droids
 
 <common_failure_modes>
 
@@ -6,7 +6,7 @@
 Industry research identifies these failure patterns:
 
 <specification_problems>
-**32% of failures**: Subagents don't know what to do.
+**32% of failures**: Droids don't know what to do.
 
 **Causes**:
 - Vague or incomplete role definition
@@ -14,7 +14,7 @@ Industry research identifies these failure patterns:
 - Unclear success criteria
 - Ambiguous constraints
 
-**Symptoms**: Subagent asks clarifying questions (can't if it's a subagent), makes incorrect assumptions, produces partial outputs, or fails to complete task.
+**Symptoms**: Droid asks clarifying questions (can't if it's a droid), makes incorrect assumptions, produces partial outputs, or fails to complete task.
 
 **Prevention**: Explicit `<role>`, `<workflow>`, `<focus_areas>`, and `<output_format>` sections in prompt.
 </specification_problems>
@@ -23,7 +23,7 @@ Industry research identifies these failure patterns:
 **28% of failures**: Coordination breakdowns in multi-agent workflows.
 
 **Causes**:
-- Subagents have conflicting objectives
+- Droids have conflicting objectives
 - Handoff points unclear
 - No shared context or state
 - Assumptions about other agents' outputs
@@ -40,15 +40,15 @@ Industry research identifies these failure patterns:
 - No validation step in workflow
 - Missing output format specification
 - No error detection logic
-- Blind trust in subagent outputs
+- Blind trust in droid outputs
 
 **Symptoms**: Incorrect results silently propagated, hallucinations undetected, format errors break downstream processes.
 
-**Prevention**: Include verification steps in subagent workflows, validate outputs before use, implement evaluator agents.
+**Prevention**: Include verification steps in droid workflows, validate outputs before use, implement evaluator agents.
 </verification_gaps>
 
 <error_cascading>
-**Critical pattern**: Failures in one subagent propagate to others.
+**Critical pattern**: Failures in one droid propagate to others.
 
 **Causes**:
 - No error handling in downstream agents
@@ -57,7 +57,7 @@ Industry research identifies these failure patterns:
 
 **Symptoms**: Single failure causes entire workflow to fail.
 
-**Prevention**: Defensive programming in subagent prompts, graceful degradation strategies, validation at boundaries.
+**Prevention**: Defensive programming in droid prompts, graceful degradation strategies, validation at boundaries.
 </error_cascading>
 
 <non_determinism>
@@ -103,7 +103,7 @@ Industry research identifies these failure patterns:
 </graceful_degradation>
 
 <autonomous_retry>
-**Pattern**: Subagent retries failed operations with exponential backoff.
+**Pattern**: Droid retries failed operations with exponential backoff.
 
 <example>
 ```markdown
@@ -140,7 +140,7 @@ If API endpoint has failed 5 consecutive times:
 </circuit_breaker_logic>
 ```
 
-**Application to subagents**: Include in prompt when subagent calls external APIs or services.
+**Application to droids**: Include in prompt when droid calls external APIs or services.
 
 **Benefit**: Prevents wasting time/tokens on operations known to be failing.
 </conceptual_example>
@@ -162,7 +162,7 @@ For long-running operations:
 </timeout_handling>
 ```
 
-**Note**: Claude Code has built-in timeouts for tool calls. Subagent prompts should include guidance on what to do when operations approach reasonable time limits.
+**Note**: Factory CLI has built-in timeouts for tool calls. Droid prompts should include guidance on what to do when operations approach reasonable time limits.
 </implementation>
 </timeouts>
 
@@ -204,7 +204,7 @@ Know when to escalate rather than thrashing.
 </escalation_workflow>
 ```
 
-**Key insight**: Subagents should recognize their limitations and provide useful handoff information.
+**Key insight**: Droids should recognize their limitations and provide useful handoff information.
 </example>
 </reassigning_tasks>
 </recovery_strategies>
@@ -304,7 +304,7 @@ Before returning output:
 ```markdown
 Invocation ID: abc-123-def
 Timestamp: 2025-11-15T14:23:01Z
-Subagent: security-reviewer
+Droid: security-reviewer
 Model: sonnet-4.5
 Input: "Review changes in commit a3f2b1c"
 Tool calls:
@@ -365,13 +365,13 @@ Main chat [abc123]:
 ```markdown
 ---
 name: output-validator
-description: Validates subagent outputs against expected schemas and quality criteria. Use after any subagent produces structured output.
+description: Validates droid outputs against expected schemas and quality criteria. Use after any droid produces structured output.
 tools: Read
 model: haiku
 ---
 
 <role>
-You are an output validation specialist. Check subagent outputs for:
+You are an output validation specialist. Check droid outputs for:
 - Schema compliance
 - Completeness
 - Internal consistency
@@ -379,7 +379,7 @@ You are an output validation specialist. Check subagent outputs for:
 </role>
 
 <workflow>
-1. Receive subagent output and expected schema
+1. Receive droid output and expected schema
 2. Validate structure matches schema
 3. Check for required fields
 4. Verify value constraints (enums, formats, ranges)
@@ -403,7 +403,7 @@ Partial: Minor issues that don't prevent use - flag warnings
 
 
 <anti_pattern name="silent_failures">
-❌ Subagent fails but doesn't indicate failure in output
+❌ Droid fails but doesn't indicate failure in output
 
 **Example**:
 ```markdown
@@ -416,7 +416,7 @@ Output: "No issues found" (incomplete review, but looks successful)
 </anti_pattern>
 
 <anti_pattern name="no_fallback">
-❌ When ideal path fails, subagent gives up entirely
+❌ When ideal path fails, droid gives up entirely
 
 **Example**:
 ```markdown
@@ -474,7 +474,7 @@ Total workflow failure from single upstream error
 <recovery_checklist>
 
 
-Include these patterns in subagent prompts:
+Include these patterns in droid prompts:
 
 **Error detection**:
 - [ ] Validate inputs before processing

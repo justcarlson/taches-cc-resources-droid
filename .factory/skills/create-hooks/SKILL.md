@@ -1,23 +1,23 @@
 ---
 name: create-hooks
-description: Expert guidance for creating, configuring, and using Claude Code hooks. Use when working with hooks, setting up event listeners, validating commands, automating workflows, adding notifications, or understanding hook types (PreToolUse, PostToolUse, Stop, SessionStart, UserPromptSubmit, etc).
+description: Expert guidance for creating, configuring, and using Factory CLI hooks. Use when working with hooks, setting up event listeners, validating commands, automating workflows, adding notifications, or understanding hook types (PreToolUse, PostToolUse, Stop, SessionStart, UserPromptSubmit, etc).
 ---
 
 <objective>
-Hooks are event-driven automation for Claude Code that execute shell commands or LLM prompts in response to tool usage, session events, and user interactions. This skill teaches you how to create, configure, and debug hooks for validating commands, automating workflows, injecting context, and implementing custom completion criteria.
+Hooks are event-driven automation for Factory CLI that execute shell commands or LLM prompts in response to tool usage, session events, and user interactions. This skill teaches you how to create, configure, and debug hooks for validating commands, automating workflows, injecting context, and implementing custom completion criteria.
 
-Hooks provide programmatic control over Claude's behavior without modifying core code, enabling project-specific automation, safety checks, and workflow customization.
+Hooks provide programmatic control over Droid's behavior without modifying core code, enabling project-specific automation, safety checks, and workflow customization.
 </objective>
 
 <context>
-Hooks are shell commands or LLM-evaluated prompts that execute in response to Claude Code events. They operate within an event hierarchy: events (PreToolUse, PostToolUse, Stop, etc.) trigger matchers (tool patterns) which fire hooks (commands or prompts). Hooks can block actions, modify tool inputs, inject context, or simply observe and log Claude's operations.
+Hooks are shell commands or LLM-evaluated prompts that execute in response to Factory CLI events. They operate within an event hierarchy: events (PreToolUse, PostToolUse, Stop, etc.) trigger matchers (tool patterns) which fire hooks (commands or prompts). Hooks can block actions, modify tool inputs, inject context, or simply observe and log Droid's operations.
 </context>
 
 <quick_start>
 <workflow>
 1. Create hooks config file:
-   - Project: `.claude/hooks.json`
-   - User: `~/.claude/hooks.json`
+   - Project: `.factory/hooks.json`
+   - User: `~/.factory/hooks.json`
 2. Choose hook event (when it fires)
 3. Choose hook type (command or prompt)
 4. Configure matcher (which tools trigger it)
@@ -27,7 +27,7 @@ Hooks are shell commands or LLM-evaluated prompts that execute in response to Cl
 <example>
 **Log all bash commands**:
 
-`.claude/hooks.json`:
+`.factory/hooks.json`:
 ```json
 {
   "hooks": {
@@ -37,7 +37,7 @@ Hooks are shell commands or LLM-evaluated prompts that execute in response to Cl
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '\"\\(.tool_input.command) - \\(.tool_input.description // \\\"No description\\\")\"' >> ~/.claude/bash-log.txt"
+            "command": "jq -r '\"\\(.tool_input.command) - \\(.tool_input.description // \\\"No description\\\")\"' >> ~/.factory/bash-log.txt"
           }
         ]
       }
@@ -59,12 +59,12 @@ This hook:
 | **PreToolUse** | Before tool execution | Yes |
 | **PostToolUse** | After tool execution | No |
 | **UserPromptSubmit** | User submits a prompt | Yes |
-| **Stop** | Claude attempts to stop | Yes |
-| **SubagentStop** | Subagent attempts to stop | Yes |
+| **Stop** | Droid attempts to stop | Yes |
+| **DroidStop** | Droid attempts to stop | Yes |
 | **SessionStart** | Session begins | No |
 | **SessionEnd** | Session ends | No |
 | **PreCompact** | Before context compaction | Yes |
-| **Notification** | Claude needs input | No |
+| **Notification** | Droid needs input | No |
 
 Blocking hooks can return `"decision": "block"` to prevent the action. See [references/hook-types.md](references/hook-types.md) for detailed use cases.
 </hook_types>
@@ -164,7 +164,7 @@ Available in hook commands:
 **Example**:
 ```json
 {
-  "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/validate.sh"
+  "command": "$CLAUDE_PROJECT_DIR/.factory/hooks/validate.sh"
 }
 ```
 </environment_variables>
@@ -179,7 +179,7 @@ Available in hook commands:
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e 'display notification \"Claude needs input\" with title \"Claude Code\"'"
+            "command": "osascript -e 'display notification \"Droid needs input\" with title \"Factory CLI\"'"
           }
         ]
       }
@@ -313,14 +313,14 @@ This shows which hooks matched, command execution, and output. See [references/t
 claude --debug
 
 # Validate JSON config
-jq . .claude/hooks.json
+jq . .factory/hooks.json
 ```
 </security_checklist>
 
 <success_criteria>
 A working hook configuration has:
 
-- Valid JSON in `.claude/hooks.json` (validated with `jq`)
+- Valid JSON in `.factory/hooks.json` (validated with `jq`)
 - Appropriate hook event selected for the use case
 - Correct matcher pattern that matches target tools
 - Command or prompt that executes without errors

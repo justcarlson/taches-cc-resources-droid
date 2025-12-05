@@ -1,4 +1,4 @@
-# Debugging and Troubleshooting Subagents
+# Debugging and Troubleshooting Droids
 
 <core_challenges>
 
@@ -23,7 +23,7 @@ Impact: Behavior no single agent was designed to exhibit, hard to predict or dia
 </emergent_behaviors>
 
 <black_box_execution>
-**Subagents run in isolated contexts**.
+**Droids run in isolated contexts**.
 
 User sees final output, not intermediate steps. Makes diagnosis harder.
 
@@ -51,9 +51,9 @@ Common issues:
 
 <what_to_log>
 Essential logging:
-- **Input prompts**: Full subagent prompt + user request
+- **Input prompts**: Full droid prompt + user request
 - **Tool calls**: Which tools called, parameters, results
-- **Outputs**: Final subagent response
+- **Outputs**: Final droid response
 - **Metadata**: Timestamps, model version, token usage, latency
 - **Errors**: Exceptions, tool failures, timeouts
 - **Decisions**: Key choice points in workflow
@@ -63,7 +63,7 @@ Format:
 {
   "invocation_id": "inv_20251115_abc123",
   "timestamp": "2025-11-15T14:23:01Z",
-  "subagent": "security-reviewer",
+  "droid": "security-reviewer",
   "model": "claude-sonnet-4-5",
   "input": {
     "task": "Review auth.ts for security issues",
@@ -104,7 +104,7 @@ Format:
 - 8-30 days: Sampled logs (every 10th invocation) + all failures
 - 30+ days: Failures only + aggregated metrics
 
-**Storage**: Local files (`.claude/logs/`) or centralized logging service.
+**Storage**: Local files (`.factory/logs/`) or centralized logging service.
 </log_retention>
 </thorough_logging>
 
@@ -137,8 +137,8 @@ Session: workflow-20251115-abc
 <tracing_implementation>
 Generate correlation ID for each workflow:
 - Workflow ID: unique identifier for entire user request
-- Subagent ID: workflow_id + agent name + sequence number
-- Tool ID: subagent_id + tool name + sequence number
+- Droid ID: workflow_id + agent name + sequence number
+- Tool ID: droid_id + tool name + sequence number
 
 Log all events with correlation IDs for end-to-end reconstruction.
 </tracing_implementation>
@@ -181,17 +181,17 @@ Events:
 ```markdown
 ---
 name: output-validator
-description: Validates subagent outputs for correctness, completeness, and format compliance
+description: Validates droid outputs for correctness, completeness, and format compliance
 tools: Read
 model: haiku
 ---
 
 <role>
-You are a validation specialist. Check subagent outputs for quality issues.
+You are a validation specialist. Check droid outputs for quality issues.
 </role>
 
 <validation_checks>
-For each subagent output:
+For each droid output:
 1. **Format compliance**: Matches expected schema
 2. **Completeness**: All required fields present
 3. **Consistency**: No internal contradictions
@@ -241,7 +241,7 @@ Validation result:
 **Mitigation**:
 ```markdown
 <anti_hallucination>
-In subagent prompt:
+In droid prompt:
 - "Only reference files you've actually read"
 - "If unsure, say so explicitly rather than guessing"
 - "Cite specific line numbers for code references"
@@ -313,7 +313,7 @@ Before returning output:
 </prompt_injection>
 
 <workflow_incompleteness>
-**Subagent skips steps or produces partial output**.
+**Droid skips steps or produces partial output**.
 
 **Symptoms**:
 - Missing expected components
@@ -383,11 +383,11 @@ Before using a tool, ask:
 
 
 <systematic_diagnosis>
-**When subagent fails or produces unexpected output**:
+**When droid fails or produces unexpected output**:
 
 <step_1>
 **1. Reproduce the issue**
-- Invoke subagent with same inputs
+- Invoke droid with same inputs
 - Document whether failure is consistent or intermittent
 - If intermittent, run 5-10 times to identify frequency
 </step_1>
@@ -435,7 +435,7 @@ Before using a tool, ask:
 <step_7>
 **7. Test hypothesis**
 - Make targeted change to prompt/input
-- Re-run subagent
+- Re-run droid
 - Observe if behavior changes as predicted
 </step_7>
 
@@ -452,11 +452,11 @@ Before using a tool, ask:
 
 - [ ] Is the failure consistent or intermittent?
 - [ ] Does the error message indicate the problem clearly?
-- [ ] Was there a recent change to the subagent prompt?
+- [ ] Was there a recent change to the droid prompt?
 - [ ] Does the issue occur with all inputs or specific ones?
 - [ ] Are logs available for the failed execution?
-- [ ] Has this subagent worked correctly in the past?
-- [ ] Are other subagents experiencing similar issues?
+- [ ] Has this droid worked correctly in the past?
+- [ ] Are other droids experiencing similar issues?
 </quick_diagnostic_checklist>
 </diagnostic_procedures>
 
@@ -464,7 +464,7 @@ Before using a tool, ask:
 
 
 <issue_specificity>
-**Problem**: Subagent too generic, produces vague outputs.
+**Problem**: Droid too generic, produces vague outputs.
 
 **Diagnosis**: Role definition lacks specificity, focus areas too broad.
 
@@ -482,7 +482,7 @@ Focus on OWASP Top 10, authentication flaws, and data exposure risks.
 </issue_specificity>
 
 <issue_context>
-**Problem**: Subagent makes incorrect assumptions or misses important info.
+**Problem**: Droid makes incorrect assumptions or misses important info.
 
 **Diagnosis**: Context failure - relevant information not in prompt or context window.
 
@@ -493,7 +493,7 @@ Focus on OWASP Top 10, authentication flaws, and data exposure risks.
 </issue_context>
 
 <issue_workflow>
-**Problem**: Subagent inconsistently follows process or skips steps.
+**Problem**: Droid inconsistently follows process or skips steps.
 
 **Diagnosis**: Workflow not explicit enough, no verification step.
 
@@ -545,7 +545,7 @@ Validate output matches this structure before returning.
 </issue_output>
 
 <issue_constraints>
-**Problem**: Subagent does things it shouldn't (modifies wrong files, runs dangerous commands).
+**Problem**: Droid does things it shouldn't (modifies wrong files, runs dangerous commands).
 
 **Diagnosis**: Constraints missing or too vague.
 
@@ -564,14 +564,14 @@ Use strong modal verbs (ONLY, NEVER, ALWAYS) for critical constraints.
 </issue_constraints>
 
 <issue_tools>
-**Problem**: Subagent uses wrong tools or uses tools inefficiently.
+**Problem**: Droid uses wrong tools or uses tools inefficiently.
 
 **Diagnosis**: Tool access too broad or tool usage guidance missing.
 
 **Fix**:
 ```markdown
 <tool_access>
-This subagent is read-only and should only use:
+This droid is read-only and should only use:
 - Read: View file contents
 - Grep: Search for patterns
 - Glob: Find files
@@ -603,7 +603,7 @@ Efficient tool usage:
 </anti_pattern>
 
 <anti_pattern name="no_logging">
-❌ Running subagents with no logging, then wondering why they failed
+❌ Running droids with no logging, then wondering why they failed
 
 **Fix**: Comprehensive logging is non-negotiable. Can't debug what you can't observe.
 </anti_pattern>
@@ -680,7 +680,7 @@ Efficient tool usage:
 - Success rate over time (trend line)
 - Error type breakdown (pie chart)
 - Latency distribution (histogram)
-- Token usage by subagent (bar chart)
+- Token usage by droid (bar chart)
 - Top 10 failure causes (ranked list)
 - Invocation volume (time series)
 </dashboards>
@@ -709,6 +709,6 @@ Efficient tool usage:
 - Add common issues to anti-patterns section
 - Update best practices based on real-world usage
 - Create troubleshooting guides for frequent problems
-- Share insights across subagents (similar fixes often apply)
+- Share insights across droids (similar fixes often apply)
 </knowledge_capture>
 </continuous_improvement>

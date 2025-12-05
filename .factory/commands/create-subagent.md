@@ -1,6 +1,6 @@
 ---
-description: Create specialized Claude Code subagents with expert guidance
+description: Create specialized Factory CLI droids with expert guidance
 argument-hint: [agent idea or description]
 ---
 
-Invoke the create-subagents skill for: $ARGUMENTS
+Invoke the create-droids skill for: $ARGUMENTS

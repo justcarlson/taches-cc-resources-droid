@@ -13,7 +13,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e 'display notification \"Claude needs your input\" with title \"Claude Code\" sound name \"Glass\"'"
+            "command": "osascript -e 'display notification \"Droid needs your input\" with title \"Factory CLI\" sound name \"Glass\"'"
           }
         ]
       }
@@ -31,7 +31,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "notify-send 'Claude Code' 'Awaiting your input' --urgency=normal"
+            "command": "notify-send 'Factory CLI' 'Awaiting your input' --urgency=normal"
           }
         ]
       }
@@ -72,7 +72,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '\"[\" + (.timestamp // now | todate) + \"] \" + .tool_input.command + \" - \" + (.tool_input.description // \"No description\")' >> ~/.claude/bash-log.txt"
+            "command": "jq -r '\"[\" + (.timestamp // now | todate) + \"] \" + .tool_input.command + \" - \" + (.tool_input.description // \"No description\")' >> ~/.factory/bash-log.txt"
           }
         ]
       }
@@ -91,7 +91,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '\"[\" + (now | todate) + \"] \" + .tool_name + \": \" + .tool_input.file_path' >> ~/.claude/file-operations.log"
+            "command": "jq -r '\"[\" + (now | todate) + \"] \" + .tool_name + \": \" + .tool_input.file_path' >> ~/.factory/file-operations.log"
           }
         ]
       }
@@ -110,7 +110,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "jq '. + {timestamp: now}' >> ~/.claude/mcp-audit.jsonl"
+            "command": "jq '. + {timestamp: now}' >> ~/.factory/mcp-audit.jsonl"
           }
         ]
       }
@@ -503,7 +503,7 @@ transcript_path=$(echo "$input" | jq -r '.transcript_path')
 session_id=$(echo "$input" | jq -r '.session_id')
 
 # Create archive directory
-archive_dir="$HOME/.claude/archives"
+archive_dir="$HOME/.factory/archives"
 mkdir -p "$archive_dir"
 
 # Copy transcript with timestamp
@@ -522,7 +522,7 @@ echo "Session archived to $archive_dir"
         "hooks": [
           {
             "type": "command",
-            "command": "jq '. + {ended_at: now}' >> ~/.claude/session-stats.jsonl"
+            "command": "jq '. + {ended_at: now}' >> ~/.factory/session-stats.jsonl"
           }
         ]
       }
@@ -635,7 +635,7 @@ Use `$CLAUDE_PROJECT_DIR` for project-specific hooks:
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/init-session.sh"
+            "command": "$CLAUDE_PROJECT_DIR/.factory/hooks/init-session.sh"
           }
         ]
       }
@@ -646,7 +646,7 @@ Use `$CLAUDE_PROJECT_DIR` for project-specific hooks:
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/validate-changes.sh"
+            "command": "$CLAUDE_PROJECT_DIR/.factory/hooks/validate-changes.sh"
           }
         ]
       }

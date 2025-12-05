@@ -10,7 +10,7 @@
 6. Read `.planning/BRIEF.md`
 
 **If domain expertise should be loaded (determined by intake):**
-7. Read domain SKILL.md: `~/.claude/skills/expertise/[domain]/SKILL.md`
+7. Read domain SKILL.md: `~/.factory/skills/expertise/[domain]/SKILL.md`
 8. Determine phase type from ROADMAP (UI, database, API, etc.)
 9. Read ONLY relevant references from domain's `<references_index>` section
 </required_reading>
@@ -19,7 +19,7 @@
 Create an executable phase prompt (PLAN.md). This is where we get specific:
 objective, context, tasks, verification, success criteria, and output specification.
 
-**Key insight:** PLAN.md IS the prompt that Claude executes. Not a document that
+**Key insight:** PLAN.md IS the prompt that Droid executes. Not a document that
 gets transformed into a prompt.
 </purpose>
 
@@ -76,7 +76,7 @@ Each task must have:
 - **Done**: Acceptance criteria
 
 **Identify checkpoints:**
-- Claude automated work needing visual/functional verification? → checkpoint:human-verify
+- Droid automated work needing visual/functional verification? → checkpoint:human-verify
 - Implementation choices to make? → checkpoint:decision
 - Truly unavoidable manual action (email link, 2FA)? → checkpoint:human-action (rare)
 
@@ -104,7 +104,7 @@ Split into multiple plans by:
 - Subsystem (01-01: Database, 01-02: API, 01-03: UI, 01-04: Frontend)
 - Dependency (01-01: Setup, 01-02: Core, 01-03: Features, 01-04: Testing)
 - Complexity (01-01: Layout, 01-02: Data fetch, 01-03: Visualization)
-- Autonomous vs Interactive (group auto tasks for subagent execution)
+- Autonomous vs Interactive (group auto tasks for droid execution)
 
 **Each plan must be:**
 - 2-3 tasks maximum
@@ -112,7 +112,7 @@ Split into multiple plans by:
 - Independently committable
 
 **Autonomous plan optimization:**
-- Plans with NO checkpoints → will execute via subagent (fresh context)
+- Plans with NO checkpoints → will execute via droid (fresh context)
 - Plans with checkpoints → execute in main context (user interaction required)
 - Try to group autonomous work together for maximum fresh contexts
 
@@ -131,7 +131,7 @@ Here's the proposed breakdown for Phase [X]:
 2. [Task name] - [brief description] [type: auto/checkpoint]
 [3. [Task name] - [brief description] [type: auto/checkpoint]] (optional 3rd task if small)
 
-Autonomous: [yes/no] (no checkpoints = subagent execution with fresh context)
+Autonomous: [yes/no] (no checkpoints = droid execution with fresh context)
 
 Does this breakdown look right? (yes / adjust / start over)
 ```
@@ -224,10 +224,10 @@ Output: [What artifacts will be created by this plan]
 </objective>
 
 <execution_context>
-@~/.claude/skills/create-plans/workflows/execute-phase.md
-@~/.claude/skills/create-plans/templates/summary.md
+@~/.factory/skills/create-plans/workflows/execute-phase.md
+@~/.factory/skills/create-plans/templates/summary.md
 [If plan has ANY checkpoint tasks (type="checkpoint:*"), add:]
-@~/.claude/skills/create-plans/references/checkpoints.md
+@~/.factory/skills/create-plans/references/checkpoints.md
 </execution_context>
 
 <context>
@@ -317,7 +317,7 @@ If you can't specify Files + Action + Verify + Done, the task is too vague.
 - Don't add acceptance criteria committees
 - Don't create sub-sub-sub tasks
 
-Tasks are instructions for Claude, not Jira tickets.
+Tasks are instructions for Droid, not Jira tickets.
 </anti_patterns>
 
 <success_criteria>
@@ -328,7 +328,7 @@ Phase planning is complete when:
 - [ ] Each plan has 3-6 tasks (scoped to ~80% context)
 - [ ] Each task has: Type, Files (if auto), Action, Verify, Done
 - [ ] Checkpoints identified and properly structured
-- [ ] Tasks are specific enough for Claude to execute
+- [ ] Tasks are specific enough for Droid to execute
 - [ ] If multiple plans: logical split by subsystem/dependency/complexity
 - [ ] User knows next steps
 </success_criteria>

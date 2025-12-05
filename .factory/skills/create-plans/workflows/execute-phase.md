@@ -39,7 +39,7 @@ Proceed with execution?
 <step name="parse_segments">
 **Intelligent segmentation: Parse plan into execution segments.**
 
-Plans are divided into segments by checkpoints. Each segment is routed to optimal execution context (subagent or main).
+Plans are divided into segments by checkpoints. Each segment is routed to optimal execution context (droid or main).
 
 **1. Check for checkpoints:**
 ```bash
@@ -50,8 +50,8 @@ grep -n "type=\"checkpoint" .planning/phases/XX-name/{phase}-{plan}-PLAN.md
 **2. Analyze execution strategy:**
 
 **If NO checkpoints found:**
-- **Fully autonomous plan** - spawn single subagent for entire plan
-- Subagent gets fresh 200k context, executes all tasks, creates SUMMARY, commits
+- **Fully autonomous plan** - spawn single droid for entire plan
+- Droid gets fresh 200k context, executes all tasks, creates SUMMARY, commits
 - Main context: Just orchestration (~5% usage)
 
 **If checkpoints found, parse into segments:**
@@ -77,14 +77,14 @@ IF segment follows checkpoint:decision OR checkpoint:human-action:
 
 **Pattern A: Fully autonomous (no checkpoints)**
 ```
-Spawn subagent → execute all tasks → SUMMARY → commit → report back
+Spawn droid → execute all tasks → SUMMARY → commit → report back
 ```
 
 **Pattern B: Segmented with verify-only checkpoints**
 ```
-Segment 1 (tasks 1-3): Spawn subagent → execute → report back
+Segment 1 (tasks 1-3): Spawn droid → execute → report back
 Checkpoint 4 (human-verify): Main context → you verify → continue
-Segment 2 (tasks 5-6): Spawn NEW subagent → execute → report back
+Segment 2 (tasks 5-6): Spawn NEW droid → execute → report back
 Checkpoint 7 (human-verify): Main context → you verify → continue
 Aggregate results → SUMMARY → commit
 ```
@@ -112,7 +112,7 @@ No segmentation benefit - execute entirely in main
 
 **For fully autonomous plans:**
 ```
-Use Task tool with subagent_type="general-purpose":
+Use Task tool with droid_type="general-purpose":
 
 Prompt: "Execute plan at .planning/phases/{phase}-{plan}-PLAN.md
 
@@ -128,9 +128,9 @@ When complete, report: plan name, tasks completed, SUMMARY path, commit hash."
 Execute segment-by-segment:
 
 For each autonomous segment:
-  Spawn subagent with prompt: "Execute tasks [X-Y] from plan at .planning/phases/{phase}-{plan}-PLAN.md. Read the plan for full context and deviation rules. Do NOT create SUMMARY or commit - just execute these tasks and report results."
+  Spawn droid with prompt: "Execute tasks [X-Y] from plan at .planning/phases/{phase}-{plan}-PLAN.md. Read the plan for full context and deviation rules. Do NOT create SUMMARY or commit - just execute these tasks and report results."
 
-  Wait for subagent completion
+  Wait for droid completion
 
 For each checkpoint:
   Execute in main context
@@ -146,7 +146,7 @@ After all segments complete:
 **For decision-dependent plans:**
 ```
 Execute in main context (standard flow below)
-No subagent routing
+No droid routing
 Quality maintained through small scope (2-3 tasks per plan)
 ```
 
@@ -177,13 +177,13 @@ For Pattern A (fully autonomous) and Pattern C (decision-dependent), skip this s
 2. For each segment in order:
 
    A. Determine routing (apply rules from parse_segments):
-      - No prior checkpoint? → Subagent
-      - Prior checkpoint was human-verify? → Subagent
+      - No prior checkpoint? → Droid
+      - Prior checkpoint was human-verify? → Droid
       - Prior checkpoint was decision/human-action? → Main context
 
-   B. If routing = Subagent:
+   B. If routing = Droid:
       ```
-      Spawn Task tool with subagent_type="general-purpose":
+      Spawn Task tool with droid_type="general-purpose":
 
       Prompt: "Execute tasks [task numbers/names] from plan at [plan path].
 
@@ -205,7 +205,7 @@ For Pattern A (fully autonomous) and Pattern C (decision-dependent), skip this s
       - Deviations encountered
       - Any issues or blockers"
 
-      Wait for subagent to complete
+      Wait for droid to complete
       Capture results (files changed, deviations, etc.)
       ```
 
@@ -213,7 +213,7 @@ For Pattern A (fully autonomous) and Pattern C (decision-dependent), skip this s
       Execute tasks in main using standard execution flow (step name="execute")
       Track results locally
 
-   D. After segment completes (whether subagent or main):
+   D. After segment completes (whether droid or main):
       Continue to next checkpoint/segment
 
 3. After ALL segments complete:
@@ -228,7 +228,7 @@ For Pattern A (fully autonomous) and Pattern C (decision-dependent), skip this s
       - Use aggregated results
       - Document all work from all segments
       - Include deviations from all segments
-      - Note which segments were subagented
+      - Note which segments were droided
 
    C. Commit:
       - Stage all files from all segments
@@ -258,8 +258,8 @@ Routing analysis:
 - Segment 3: After verify → SUBAGENT ✓
 
 Execution:
-[1] Spawning subagent for tasks 1-3...
-    → Subagent completes: 3 files modified, 0 deviations
+[1] Spawning droid for tasks 1-3...
+    → Droid completes: 3 files modified, 0 deviations
 [2] Executing checkpoint 4 (human-verify)...
     ════════════════════════════════════════
     CHECKPOINT: Verification Required
@@ -268,17 +268,17 @@ Execution:
     How to verify: Check src/db/schema.ts for correct types
     ════════════════════════════════════════
     User: "approved"
-[3] Spawning subagent for tasks 5-6...
-    → Subagent completes: 2 files modified, 1 deviation (added error handling)
+[3] Spawning droid for tasks 5-6...
+    → Droid completes: 2 files modified, 1 deviation (added error handling)
 [4] Executing checkpoint 7 (human-verify)...
     User: "approved"
-[5] Spawning subagent for task 8...
-    → Subagent completes: 1 file modified, 0 deviations
+[5] Spawning droid for task 8...
+    → Droid completes: 1 file modified, 0 deviations
 
 Aggregating results...
 - Total files: 6 modified
 - Total deviations: 1
-- Segmented execution: 3 subagents, 2 checkpoints
+- Segmented execution: 3 droids, 2 checkpoints
 
 Creating SUMMARY.md...
 Committing...
@@ -287,9 +287,9 @@ Committing...
 
 **Benefits of this pattern:**
 - Main context usage: ~20% (just orchestration + checkpoints)
-- Subagent 1: Fresh 0-30% (tasks 1-3)
-- Subagent 2: Fresh 0-30% (tasks 5-6)
-- Subagent 3: Fresh 0-20% (task 8)
+- Droid 1: Fresh 0-30% (tasks 1-3)
+- Droid 2: Fresh 0-30% (tasks 5-6)
+- Droid 3: Fresh 0-20% (task 8)
 - All autonomous work: Peak quality
 - Can handle large plans with many tasks if properly segmented
 
@@ -774,7 +774,7 @@ Logged to .planning/ISSUES.md for future consideration:
 <step name="checkpoint_protocol">
 When encountering `type="checkpoint:*"`:
 
-**Critical: Claude automates everything with CLI/API before checkpoints.** Checkpoints are for verification and decisions, not manual work.
+**Critical: Droid automates everything with CLI/API before checkpoints.** Checkpoints are for verification and decisions, not manual work.
 
 **Display checkpoint clearly:**
 ```
@@ -822,7 +822,7 @@ Options:
 
 **For checkpoint:human-action (1% - rare, only for truly unavoidable manual steps):**
 ```
-I automated: [what Claude already did via CLI/API]
+I automated: [what Droid already did via CLI/API]
 
 Need your help with: [the ONE thing with no CLI/API - email link, 2FA code]
 

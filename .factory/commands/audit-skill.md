@@ -4,21 +4,21 @@ argument-hint: <skill-path>
 ---
 
 <objective>
-Invoke the skill-auditor subagent to audit the skill at $ARGUMENTS for compliance with Agent Skills best practices.
+Invoke the skill-auditor droid to audit the skill at $ARGUMENTS for compliance with Agent Skills best practices.
 
 This ensures skills follow proper structure (pure XML, required tags, progressive disclosure) and effectiveness patterns.
 </objective>
 
 <process>
-1. Invoke skill-auditor subagent
+1. Invoke skill-auditor droid
 2. Pass skill path: $ARGUMENTS
-3. Subagent will read updated best practices (including pure XML structure requirements)
-4. Subagent evaluates XML structure quality, required/conditional tags, anti-patterns
+3. Droid will read updated best practices (including pure XML structure requirements)
+4. Droid evaluates XML structure quality, required/conditional tags, anti-patterns
 5. Review detailed findings with file:line locations, compliance scores, and recommendations
 </process>
 
 <success_criteria>
-- Subagent invoked successfully
-- Arguments passed correctly to subagent
+- Droid invoked successfully
+- Arguments passed correctly to droid
 - Audit includes XML structure evaluation
 </success_criteria>

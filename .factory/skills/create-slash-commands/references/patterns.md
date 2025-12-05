@@ -1,12 +1,12 @@
 # Command Patterns Reference
 
-Verified patterns from official Claude Code documentation.
+Verified patterns from official Factory CLI documentation.
 
 ## Git Workflow Patterns
 
 ### Pattern: Commit with Full Context
 
-**Source**: Official Claude Code documentation
+**Source**: Official Factory CLI documentation
 
 ```markdown
 ---
@@ -75,9 +75,9 @@ Current changes: ! `git status`
 
 ### Pattern: Performance Optimization
 
-**Source**: Official Claude Code documentation
+**Source**: Official Factory CLI documentation
 
-**File**: `.claude/commands/optimize.md`
+**File**: `.factory/commands/optimize.md`
 ```markdown
 ---
 description: Analyze the performance of this code and suggest three specific optimizations
@@ -106,11 +106,11 @@ This helps improve application performance through targeted improvements.
 
 **Usage**: `/optimize`
 
-Claude analyzes code in the current conversation context.
+Droid analyzes code in the current conversation context.
 
 ### Pattern: Security Review
 
-**File**: `.claude/commands/security-review.md`
+**File**: `.factory/commands/security-review.md`
 ```markdown
 ---
 description: Review this code for security vulnerabilities
@@ -174,7 +174,7 @@ References the specified file.
 
 ### Pattern: Fix Issue with Workflow
 
-**Source**: Official Claude Code documentation
+**Source**: Official Factory CLI documentation
 
 ```markdown
 ---
@@ -244,7 +244,7 @@ Uses positional arguments for structured input.
 
 ### Pattern: File Reference
 
-**Source**: Official Claude Code documentation
+**Source**: Official Factory CLI documentation
 
 ```markdown
 ---
@@ -373,7 +373,7 @@ This helps discover optimal solutions by stripping away assumptions and rebuildi
 </success_criteria>
 ```
 
-Tool restriction ensures Claude only uses SequentialThinking.
+Tool restriction ensures Droid only uses SequentialThinking.
 
 ### Pattern: Strategic Planning
 

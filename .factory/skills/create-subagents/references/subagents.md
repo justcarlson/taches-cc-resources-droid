@@ -1,16 +1,16 @@
 <file_format>
-Subagent file structure:
+Droid file structure:
 
 ```markdown
 ---
-name: your-subagent-name
-description: Description of when this subagent should be invoked
+name: your-droid-name
+description: Description of when this droid should be invoked
 tools: tool1, tool2, tool3 # Optional - inherits all tools if omitted
 model: sonnet # Optional - specify model alias or 'inherit'
 ---
 
 <role>
-Your subagent's system prompt using pure XML structure. This defines the subagent's role, capabilities, and approach.
+Your droid's system prompt using pure XML structure. This defines the droid's role, capabilities, and approach.
 </role>
 
 <constraints>
@@ -28,49 +28,49 @@ Step-by-step process for consistency.
 | Field | Required | Description |
 |-------|----------|-------------|
 | `name` | Yes | Unique identifier using lowercase letters and hyphens |
-| `description` | Yes | Natural language description of purpose. Include when Claude should invoke this. |
+| `description` | Yes | Natural language description of purpose. Include when Droid should invoke this. |
 | `tools` | No | Comma-separated list. If omitted, inherits all tools from main thread |
-| `model` | No | `sonnet`, `opus`, `haiku`, or `inherit`. If omitted, uses default subagent model |
+| `model` | No | `sonnet`, `opus`, `haiku`, or `inherit`. If omitted, uses default droid model |
 </configuration_fields>
 </file_format>
 
 <storage_locations>
 | Type | Location | Scope | Priority |
 |------|----------|-------|----------|
-| **Project** | `.claude/agents/` | Current project only | Highest |
-| **User** | `~/.claude/agents/` | All projects | Lower |
+| **Project** | `.factory/agents/` | Current project only | Highest |
+| **User** | `~/.factory/agents/` | All projects | Lower |
 | **CLI** | `--agents` flag | Current session | Medium |
 | **Plugin** | Plugin's `agents/` dir | All projects | Lowest |
 
-When subagent names conflict, higher priority takes precedence.
+When droid names conflict, higher priority takes precedence.
 </storage_locations>
 
 <execution_model>
 <black_box_model>
-Subagents execute in isolated contexts without user interaction.
+Droids execute in isolated contexts without user interaction.
 
 **Key characteristics:**
-- Subagent receives input parameters from main chat
-- Subagent runs autonomously using available tools
-- Subagent returns final output/report to main chat
+- Droid receives input parameters from main chat
+- Droid runs autonomously using available tools
+- Droid returns final output/report to main chat
 - User only sees final result, not intermediate steps
 
 **This means:**
-- ✅ Subagents can use Read, Write, Edit, Bash, Grep, Glob, WebSearch, WebFetch
-- ✅ Subagents can access MCP servers (non-interactive tools)
-- ✅ Subagents can make decisions based on their prompt and available data
-- ❌ **Subagents CANNOT use AskUserQuestion**
-- ❌ **Subagents CANNOT present options and wait for user selection**
-- ❌ **Subagents CANNOT request confirmations or clarifications from user**
-- ❌ **User does not see subagent's tool calls or intermediate reasoning**
+- ✅ Droids can use Read, Write, Edit, Bash, Grep, Glob, WebSearch, WebFetch
+- ✅ Droids can access MCP servers (non-interactive tools)
+- ✅ Droids can make decisions based on their prompt and available data
+- ❌ **Droids CANNOT use AskUserQuestion**
+- ❌ **Droids CANNOT present options and wait for user selection**
+- ❌ **Droids CANNOT request confirmations or clarifications from user**
+- ❌ **User does not see droid's tool calls or intermediate reasoning**
 </black_box_model>
 
 <workflow_implications>
-**When designing subagent workflows:**
+**When designing droid workflows:**
 
 Keep user interaction in main chat:
 ```markdown
-# ❌ WRONG - Subagent cannot do this
+# ❌ WRONG - Droid cannot do this
 ---
 name: requirement-gatherer
 description: Gathers requirements from user
@@ -84,9 +84,9 @@ You ask the user questions to gather requirements...
 # ✅ CORRECT - Main chat handles interaction
 Main chat: Uses AskUserQuestion to gather requirements
   ↓
-Launch subagent: Uses requirements to research/build (no interaction)
+Launch droid: Uses requirements to research/build (no interaction)
   ↓
-Main chat: Present subagent results to user
+Main chat: Present droid results to user
 ```
 </workflow_implications>
 </execution_model>
@@ -102,7 +102,7 @@ description: Reviews code for quality and security
 ---
 ```
 
-Subagent has access to all tools, including MCP tools.
+Droid has access to all tools, including MCP tools.
 </inherit_all_tools>
 
 <specific_tools>
@@ -185,18 +185,18 @@ Use `/agents` command to see full list of available tools.
 
 <invocation>
 <automatic>
-Claude automatically selects subagents based on:
+Droid automatically selects droids based on:
 - Task description in user's request
-- `description` field in subagent configuration
+- `description` field in droid configuration
 - Current context
 </automatic>
 
 <explicit>
-Users can explicitly request a subagent:
+Users can explicitly request a droid:
 
 ```
-> Use the code-reviewer subagent to check my recent changes
-> Have the test-runner subagent fix the failing tests
+> Use the code-reviewer droid to check my recent changes
+> Have the test-runner droid fix the failing tests
 ```
 </explicit>
 </invocation>
@@ -204,23 +204,23 @@ Users can explicitly request a subagent:
 <management>
 <using_agents_command>
 **Recommended**: Use `/agents` command for interactive management:
-- View all available subagents (built-in, user, project, plugin)
-- Create new subagents with guided setup
-- Edit existing subagents and their tool access
-- Delete custom subagents
-- See which subagents take priority when names conflict
+- View all available droids (built-in, user, project, plugin)
+- Create new droids with guided setup
+- Edit existing droids and their tool access
+- Delete custom droids
+- See which droids take priority when names conflict
 </using_agents_command>
 
 <direct_file_management>
-**Alternative**: Edit subagent files directly:
-- Project: `.claude/agents/subagent-name.md`
-- User: `~/.claude/agents/subagent-name.md`
+**Alternative**: Edit droid files directly:
+- Project: `.factory/agents/droid-name.md`
+- User: `~/.factory/agents/droid-name.md`
 
 Follow the file format specified above (YAML frontmatter + system prompt).
 </direct_file_management>
 
 <cli_based_configuration>
-**Temporary**: Define subagents via CLI for session-specific use:
+**Temporary**: Define droids via CLI for session-specific use:
 
 ```bash
 claude --agents '{
@@ -237,7 +237,7 @@ Useful for testing configurations before saving them.
 </cli_based_configuration>
 </management>
 
-<example_subagents>
+<example_droids>
 <test_writer>
 ```markdown
 ---
@@ -299,7 +299,7 @@ You are a debugging specialist skilled at root cause analysis and systematic pro
 </debugging_techniques>
 ```
 </debugger>
-</example_subagents>
+</example_droids>
 
 <tool_security>
 <core_principle>
@@ -342,7 +342,7 @@ Scope: Can draft email, cannot access sensitive financial data
 
 <audit_checklist>
 **Tool access audit**:
-- [ ] Does this subagent need Write/Edit, or is Read sufficient?
+- [ ] Does this droid need Write/Edit, or is Read sufficient?
 - [ ] Should it execute code (Bash), or just analyze?
 - [ ] Are all granted tools necessary for the task?
 - [ ] What's the worst-case misuse scenario?
@@ -354,7 +354,7 @@ Scope: Can draft email, cannot access sensitive financial data
 
 <prompt_caching>
 <benefits>
-Prompt caching for frequently-invoked subagents:
+Prompt caching for frequently-invoked droids:
 - **90% cost reduction** on cached tokens
 - **85% latency reduction** for cache hits
 - Cached content: ~10% cost of uncached tokens
@@ -405,13 +405,13 @@ Recent changes: {varies per invocation}
 
 <when_to_use>
 **Best candidates for caching**:
-- Frequently-invoked subagents (multiple times per session)
+- Frequently-invoked droids (multiple times per session)
 - Large, stable prompts (extensive guidelines, examples)
 - Consistent tool definitions across invocations
-- Long-running sessions with repeated subagent use
+- Long-running sessions with repeated droid use
 
 **Not beneficial**:
-- Rarely-used subagents (once per session)
+- Rarely-used droids (once per session)
 - Prompts that change frequently
 - Very short prompts (caching overhead > benefit)
 </when_to_use>
@@ -424,7 +424,7 @@ Recent changes: {varies per invocation}
 - Expires after 5 minutes of non-use (or 1 hour for extended TTL)
 
 **Invalidation triggers**:
-- Subagent prompt modified
+- Droid prompt modified
 - Tool definitions changed
 - Cache TTL expires
 </cache_management>
@@ -432,7 +432,7 @@ Recent changes: {varies per invocation}
 
 <best_practices>
 <be_specific>
-Create task-specific subagents, not generic helpers.
+Create task-specific droids, not generic helpers.
 
 ❌ Bad: "You are a helpful assistant"
 ✅ Good: "You are a React performance optimizer specializing in hooks and memoization"

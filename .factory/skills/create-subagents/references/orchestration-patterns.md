@@ -1,7 +1,7 @@
 # Orchestration Patterns for Multi-Agent Systems
 
 <core_concept>
-Orchestration defines how multiple subagents coordinate to complete complex tasks.
+Orchestration defines how multiple droids coordinate to complete complex tasks.
 
 **Single agent**: Sequential execution within one context.
 **Multi-agent**: Coordination between multiple specialized agents, each with focused expertise.
@@ -61,7 +61,7 @@ Main chat orchestrates:
 </sequential>
 
 <parallel>
-**Parallel/Concurrent pattern**: Multiple specialized subagents perform tasks simultaneously.
+**Parallel/Concurrent pattern**: Multiple specialized droids perform tasks simultaneously.
 
 <characteristics>
 - Agents execute independently and concurrently
@@ -76,7 +76,7 @@ Main chat orchestrates:
 - Processing multiple independent items (review multiple files)
 - Research tasks (gather information from multiple sources)
 
-**Performance data**: Anthropic's research system with 3-5 subagents in parallel achieved 90% time reduction.
+**Performance data**: Anthropic's research system with 3-5 droids in parallel achieved 90% time reduction.
 
 **Example**:
 ```markdown
@@ -372,7 +372,7 @@ Coordinator:
 <implementation_guidance>
 
 
-<coordinator_subagent>
+<coordinator_droid>
 **Example coordinator implementation**:
 
 ```markdown
@@ -418,7 +418,7 @@ If agent fails:
 - Escalate to human if critical
 </error_handling>
 ```
-</coordinator_subagent>
+</coordinator_droid>
 
 <handoff_protocol>
 **Clean handoffs between agents**:

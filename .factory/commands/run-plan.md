@@ -23,8 +23,8 @@ Execute the plan at {{plan_path}} using **intelligent segmentation** for optimal
    - Determine routing strategy:
 
    **Strategy A: Fully Autonomous (no checkpoints)**
-   - Spawn single subagent to execute entire plan
-   - Subagent reads plan, executes all tasks, creates SUMMARY, commits
+   - Spawn single droid to execute entire plan
+   - Droid reads plan, executes all tasks, creates SUMMARY, commits
    - Main context: Orchestration only (~5% usage)
    - Go to step 3A
 
@@ -44,7 +44,7 @@ Execute the plan at {{plan_path}} using **intelligent segmentation** for optimal
 
    **3A: Fully Autonomous Execution**
    ```
-   Spawn Task tool (subagent_type="general-purpose"):
+   Spawn Task tool (droid_type="general-purpose"):
 
    Prompt: "Execute plan at {{plan_path}}
 
@@ -66,13 +66,13 @@ Execute the plan at {{plan_path}} using **intelligent segmentation** for optimal
    For each segment (autonomous block between checkpoints):
 
      IF segment is autonomous:
-       Spawn subagent:
+       Spawn droid:
          "Execute tasks [X-Y] from {{plan_path}}
           Read plan for context and deviation rules.
           DO NOT create SUMMARY or commit.
           Report: tasks done, files modified, deviations"
 
-       Wait for subagent completion
+       Wait for droid completion
        Capture results
 
      ELSE IF task is checkpoint:

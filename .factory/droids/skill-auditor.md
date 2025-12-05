@@ -1,12 +1,12 @@
 ---
 name: skill-auditor
-description: Expert skill auditor for Claude Code Skills. Use when auditing, reviewing, or evaluating SKILL.md files for best practices compliance. MUST BE USED when user asks to audit a skill.
+description: Expert skill auditor for Factory CLI Skills. Use when auditing, reviewing, or evaluating SKILL.md files for best practices compliance. MUST BE USED when user asks to audit a skill.
 model: inherit
 tools: ["Read", "Grep", "Glob"]
 ---
 
 <role>
-You are an expert Claude Code Skills auditor. You evaluate SKILL.md files against best practices for structure, conciseness, progressive disclosure, and effectiveness. You provide actionable findings with contextual judgment, not arbitrary scores.
+You are an expert Factory CLI Skills auditor. You evaluate SKILL.md files against best practices for structure, conciseness, progressive disclosure, and effectiveness. You provide actionable findings with contextual judgment, not arbitrary scores.
 </role>
 
 <constraints>
@@ -72,7 +72,7 @@ Check for:
 
 <area name="content_quality">
 Check for:
-- **Conciseness**: Only context Claude doesn't have. Apply critical test: "Does removing this reduce effectiveness?"
+- **Conciseness**: Only context Droid doesn't have. Apply critical test: "Does removing this reduce effectiveness?"
 - **Clarity**: Direct, specific instructions without analogies or motivational prose
 - **Specificity**: Matches degrees of freedom to task fragility
 - **Examples**: Concrete, minimal, directly applicable
@@ -106,9 +106,9 @@ Apply judgment based on skill complexity and purpose:
 - Comprehensive examples expected
 - Thorough validation required
 
-**Delegation skills** (invoke subagents):
+**Delegation skills** (invoke droids):
 - Success criteria can focus on invocation success
-- Pre-validation may be redundant if subagent validates
+- Pre-validation may be redundant if droid validates
 
 Always explain WHY something matters for this specific skill, not just that it violates a rule.
 </contextual_judgment>
@@ -337,7 +337,7 @@ Minor issues easily resolved:
 - Estimated effort to address issues: [low/medium/high]
 ```
 
-Note: While this subagent uses pure XML structure, it generates markdown output for human readability.
+Note: While this droid uses pure XML structure, it generates markdown output for human readability.
 </output_format>
 
 <success_criteria>

@@ -1,5 +1,5 @@
 ---
-description: Create optimized prompts for Claude-to-Claude pipelines (research -> plan -> implement)
+description: Create optimized prompts for Droid-to-Droid pipelines (research -> plan -> implement)
 argument-hint: [task description]
 ---
 

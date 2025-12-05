@@ -1,4 +1,4 @@
-# Context Management for Subagents
+# Context Management for Droids
 
 <core_problem>
 
@@ -8,7 +8,7 @@
 <stateless_nature>
 LLMs are stateless by default. Each invocation starts fresh with no memory of previous interactions.
 
-**For subagents, this means**:
+**For droids, this means**:
 - Long-running tasks lose context between tool calls
 - Repeated information wastes tokens
 - Important decisions from earlier in workflow forgotten
@@ -192,7 +192,7 @@ Retrieval trigger:
 <context_switch_detection>
 Monitor for topic changes:
 - User switches from "fix bug" to "add feature"
-- Subagent transitions from "analysis" to "implementation"
+- Droid transitions from "analysis" to "implementation"
 - Task scope changes mid-execution
 
 On context switch:
@@ -222,7 +222,7 @@ On context switch:
 ```markdown
 <scratchpad_workflow>
 For complex debugging:
-1. Create scratchpad file: `.claude/scratch/debug-session-{timestamp}.md`
+1. Create scratchpad file: `.factory/scratch/debug-session-{timestamp}.md`
 2. Log each hypothesis and test result in scratchpad
 3. Keep only current hypothesis and key findings in context
 4. Reference scratchpad for full debugging history
@@ -308,7 +308,7 @@ Summary format:
 - Vector store memory
 - Entity extraction
 
-**Use case**: Building subagents that need sophisticated memory without manual implementation.
+**Use case**: Building droids that need sophisticated memory without manual implementation.
 </langchain>
 
 <llamaindex>
@@ -319,7 +319,7 @@ Summary format:
 - Automatic chunking and indexing
 - Retrieval augmentation
 
-**Use case**: Subagents working with large codebases, documentation, or extensive conversation history.
+**Use case**: Droids working with large codebases, documentation, or extensive conversation history.
 </llamaindex>
 
 <file_based>
@@ -327,15 +327,15 @@ Summary format:
 
 ```markdown
 <memory_structure>
-.claude/memory/
+.factory/memory/
   core-facts.md          # Essential project information
   decisions.md           # Key decisions and rationale
   patterns.md            # Discovered patterns and conventions
-  {subagent}-state.json  # Subagent-specific state
+  {droid}-state.json  # Droid-specific state
 </memory_structure>
 
 <usage>
-Subagent reads relevant files at start, updates during execution, summarizes at end.
+Droid reads relevant files at start, updates during execution, summarizes at end.
 </usage>
 ```
 
@@ -343,11 +343,11 @@ Subagent reads relevant files at start, updates during execution, summarizes at 
 </file_based>
 </framework_support>
 
-<subagent_patterns>
+<droid_patterns>
 
 
-<stateful_subagent>
-**For long-running or frequently-invoked subagents**:
+<stateful_droid>
+**For long-running or frequently-invoked droids**:
 
 ```markdown
 ---
@@ -363,7 +363,7 @@ You are a system architect maintaining coherent design across project evolution.
 
 <memory_management>
 On each invocation:
-1. Read `.claude/memory/architecture-state.md` for current system state
+1. Read `.factory/memory/architecture-state.md` for current system state
 2. Perform assigned task with full context
 3. Update architecture-state.md with new components, decisions, patterns
 4. Maintain concise state (max 500 lines), summarize older decisions
@@ -375,10 +375,10 @@ State file structure:
 - Active concerns (issues to address)
 </memory_management>
 ```
-</stateful_subagent>
+</stateful_droid>
 
-<stateless_subagent>
-**For simple, focused subagents**:
+<stateless_droid>
+**For simple, focused droids**:
 
 ```markdown
 ---
@@ -401,12 +401,12 @@ You are a syntax validator. Check code for syntax errors.
 ```
 
 **When to use stateless**: Single-purpose validators, formatters, simple transformations.
-</stateless_subagent>
+</stateless_droid>
 
 <context_inheritance>
 **Inheriting context from main chat**:
 
-Subagents automatically have access to:
+Droids automatically have access to:
 - User's original request
 - Any context provided in invocation
 
@@ -414,13 +414,13 @@ Subagents automatically have access to:
 Main chat: "Review the authentication changes for security issues.
            Context: We recently switched from JWT to session-based auth."
 
-Subagent receives:
+Droid receives:
 - Task: Review authentication changes
 - Context: Recent switch from JWT to session-based auth
 - This context informs review focus without explicit memory management
 ```
 </context_inheritance>
-</subagent_patterns>
+</droid_patterns>
 
 <anti_patterns>
 
@@ -535,13 +535,13 @@ Use context for:
 <prompt_caching_interaction>
 
 
-Prompt caching (see [subagents.md](subagents.md#prompt_caching)) works best with stable context.
+Prompt caching (see [droids.md](droids.md#prompt_caching)) works best with stable context.
 
 <cache_friendly_context>
 **Structure context for caching**:
 
 ```markdown
-[CACHEABLE: Stable subagent instructions]
+[CACHEABLE: Stable droid instructions]
 <role>...</role>
 <focus_areas>...</focus_areas>
 <workflow>...</workflow>
@@ -558,7 +558,7 @@ Recent context: ...
 
 <cache_invalidation>
 **When context changes invalidate cache**:
-- Subagent prompt updated
+- Droid prompt updated
 - Core memory structure changed
 - Context reorganization
 

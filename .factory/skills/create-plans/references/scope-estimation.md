@@ -4,10 +4,10 @@ Plans must maintain consistent quality from first task to last. This requires un
 
 ## The Quality Degradation Curve
 
-**Critical insight:** Claude doesn't degrade at arbitrary percentages - it degrades when it *perceives* context pressure and enters "completion mode."
+**Critical insight:** Droid doesn't degrade at arbitrary percentages - it degrades when it *perceives* context pressure and enters "completion mode."
 
 ```
-Context Usage  │  Quality Level   │  Claude's Mental State
+Context Usage  │  Quality Level   │  Droid's Mental State
 ─────────────────────────────────────────────────────────
 0-30%          │  ████████ PEAK   │  "I can be thorough and comprehensive"
                │                  │  No anxiety, full detail, best work
@@ -24,7 +24,7 @@ Context Usage  │  Quality Level   │  Claude's Mental State
 
 **The 40-50% inflection point:**
 
-This is where quality breaks. Claude sees context mounting and thinks "I'd better conserve now or I won't finish." Result: The classic mid-execution statement "I'll complete the remaining tasks more concisely" = quality crash.
+This is where quality breaks. Droid sees context mounting and thinks "I'd better conserve now or I won't finish." Result: The classic mid-execution statement "I'll complete the remaining tasks more concisely" = quality crash.
 
 **The fundamental rule:** Stop BEFORE quality degrades, not at context limit.
 
@@ -191,13 +191,13 @@ Complex work gets its own plan with full context budget.
   → Ends with checkpoint:human-verify "check xyz.vercel.app loads"
 
 - 06-02-PLAN.md: Environment config (secrets via CLI, env vars)
-  → Autonomous (no checkpoints) → subagent execution
+  → Autonomous (no checkpoints) → droid execution
 
 - 06-03-PLAN.md: CI/CD (GitHub Actions, preview deploys)
   → Ends with checkpoint:human-verify "check PR preview works"
 ```
 
-Verification checkpoints create natural boundaries. Autonomous plans between checkpoints execute via subagent with fresh context.
+Verification checkpoints create natural boundaries. Autonomous plans between checkpoints execute via droid with fresh context.
 
 ## Autonomous vs Interactive Plans
 
@@ -206,10 +206,10 @@ Verification checkpoints create natural boundaries. Autonomous plans between che
 ### Autonomous Plans (No Checkpoints)
 - Contains only `type="auto"` tasks
 - No user interaction needed
-- **Execute via subagent with fresh 200k context**
+- **Execute via droid with fresh 200k context**
 - Impossible to degrade (always starts at 0%)
 - Creates SUMMARY, commits, reports back
-- Can run in parallel (multiple subagents)
+- Can run in parallel (multiple droids)
 
 ### Interactive Plans (Has Checkpoints)
 - Contains `checkpoint:human-verify` or `checkpoint:decision` tasks
@@ -218,15 +218,15 @@ Verification checkpoints create natural boundaries. Autonomous plans between che
 - Still target 50% context (2-3 tasks)
 
 **Planning guidance:** If splitting a phase, try to:
-- Group autonomous work together (→ subagent)
+- Group autonomous work together (→ droid)
 - Separate interactive work (→ main context)
 - Maximize autonomous plans (more fresh contexts)
 
 Example:
 ```
 Phase: Feature X
-- 07-01-PLAN.md: Backend (autonomous) → subagent
-- 07-02-PLAN.md: Frontend (autonomous) → subagent
+- 07-01-PLAN.md: Backend (autonomous) → droid
+- 07-02-PLAN.md: Frontend (autonomous) → droid
 - 07-03-PLAN.md: Integration test (has checkpoint:human-verify) → main context
 ```
 
@@ -408,7 +408,7 @@ Each commit tells a story. Each is reviewable. Each is revertable. This is craft
 - All tasks: Peak quality
 - Git: Atomic, surgical commits
 - Quality: Consistent excellence
-- Autonomous plans: Subagent execution (fresh context)
+- Autonomous plans: Droid execution (fresh context)
 
 **The principle:** Aggressive atomicity. More plans, smaller scope, consistent quality.
 

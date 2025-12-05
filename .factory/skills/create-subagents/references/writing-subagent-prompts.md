@@ -1,20 +1,20 @@
 <key_insight>
-Subagent prompts should be task-specific, not generic. They define a specialized role with clear focus areas, workflows, and constraints.
+Droid prompts should be task-specific, not generic. They define a specialized role with clear focus areas, workflows, and constraints.
 
-**Critical**: Subagent.md files use pure XML structure (no markdown headings). Like skills and slash commands, this improves parsing and token efficiency.
+**Critical**: Droid.md files use pure XML structure (no markdown headings). Like skills and slash commands, this improves parsing and token efficiency.
 </key_insight>
 
 <xml_structure_rule>
-**Remove ALL markdown headings (##, ###) from subagent body.** Use semantic XML tags instead.
+**Remove ALL markdown headings (##, ###) from droid body.** Use semantic XML tags instead.
 
 Keep markdown formatting WITHIN content (bold, italic, lists, code blocks, links).
 
-See @skills/create-agent-skills/references/use-xml-tags.md for XML structure principles - they apply to subagents too.
+See @skills/create-agent-skills/references/use-xml-tags.md for XML structure principles - they apply to droids too.
 </xml_structure_rule>
 
 <core_principles>
 <principle name="specificity">
-Define exactly what the subagent does and how it approaches tasks.
+Define exactly what the droid does and how it approaches tasks.
 
 ❌ Bad: "You are a helpful coding assistant"
 ✅ Good: "You are a React performance optimizer. Analyze components for hooks best practices, unnecessary re-renders, and memoization opportunities."
@@ -28,7 +28,7 @@ State the role, focus areas, and approach explicitly.
 </principle>
 
 <principle name="constraints">
-Include what the subagent should NOT do. Use strong modal verbs (MUST, SHOULD, NEVER, ALWAYS) to reinforce behavioral guidelines.
+Include what the droid should NOT do. Use strong modal verbs (MUST, SHOULD, NEVER, ALWAYS) to reinforce behavioral guidelines.
 
 Example:
 ```markdown
@@ -45,7 +45,7 @@ Example:
 </core_principles>
 
 <structure_with_xml>
-Use XML tags to structure subagent prompts for clarity:
+Use XML tags to structure droid prompts for clarity:
 
 <example type="security_reviewer">
 ```markdown
@@ -220,7 +220,7 @@ You are a debugging specialist skilled at root cause analysis and systematic pro
 You are a helpful assistant that helps with code.
 ```
 
-This provides no specialization. The subagent won't know what to focus on or how to approach tasks.
+This provides no specialization. The droid won't know what to focus on or how to approach tasks.
 </anti_pattern>
 
 <anti_pattern name="no_workflow">
@@ -229,7 +229,7 @@ This provides no specialization. The subagent won't know what to focus on or how
 You are a code reviewer. Review code for issues.
 ```
 
-Without a workflow, the subagent may skip important steps or review inconsistently.
+Without a workflow, the droid may skip important steps or review inconsistently.
 
 ✅ Good:
 ```markdown
@@ -277,7 +277,7 @@ description: Handles current billing statements and payment processing. Use when
 <anti_pattern name="missing_constraints">
 ❌ Bad: No constraints specified
 
-Without constraints, subagents might:
+Without constraints, droids might:
 - Modify code they shouldn't touch
 - Run dangerous commands
 - Skip important steps
@@ -293,7 +293,7 @@ Without constraints, subagents might:
 </anti_pattern>
 
 <anti_pattern name="requires_user_interaction">
-❌ **Critical**: Subagents cannot interact with users.
+❌ **Critical**: Droids cannot interact with users.
 
 **Bad example:**
 ```markdown
@@ -311,25 +311,25 @@ tools: AskUserQuestion
 ```
 
 **Why this fails:**
-Subagents execute in isolated contexts ("black boxes"). They cannot use AskUserQuestion or any tool requiring user interaction. The user never sees intermediate steps.
+Droids execute in isolated contexts ("black boxes"). They cannot use AskUserQuestion or any tool requiring user interaction. The user never sees intermediate steps.
 
 **Correct approach:**
 ```markdown
 # Main chat handles user interaction
 1. Main chat: Use AskUserQuestion to gather requirements
-2. Launch subagent: Research based on requirements (no user interaction)
+2. Launch droid: Research based on requirements (no user interaction)
 3. Main chat: Present research to user, get confirmation
-4. Launch subagent: Generate code based on confirmed plan
+4. Launch droid: Generate code based on confirmed plan
 5. Main chat: Present results to user
 ```
 
-**Tools that require user interaction (cannot use in subagents):**
+**Tools that require user interaction (cannot use in droids):**
 - AskUserQuestion
 - Any workflow expecting user to respond mid-execution
 - Presenting options and waiting for selection
 
 **Design principle:**
-If your subagent prompt includes "ask user", "present options", or "wait for confirmation", it's designed incorrectly. Move user interaction to main chat.
+If your droid prompt includes "ask user", "present options", or "wait for confirmation", it's designed incorrectly. Move user interaction to main chat.
 </anti_pattern>
 </anti_patterns>
 
@@ -405,8 +405,8 @@ Include examples for complex behaviors:
 ```markdown
 <example>
 Input: [scenario]
-Expected action: [what the subagent should do]
-Output: [what the subagent should produce]
+Expected action: [what the droid should do]
+Output: [what the droid should produce]
 </example>
 ```
 </practice>
@@ -456,9 +456,9 @@ Task is complete when:
 </practice>
 </best_practices>
 
-<testing_subagents>
+<testing_droids>
 <test_checklist>
-1. **Invoke the subagent** with a representative task
+1. **Invoke the droid** with a representative task
 2. **Check if it follows the workflow** specified in the prompt
 3. **Verify output format** matches what you defined
 4. **Test edge cases** - does it handle unusual inputs well?
@@ -467,18 +467,18 @@ Task is complete when:
 </test_checklist>
 
 <common_issues>
-- **Subagent too broad**: Narrow the focus areas
+- **Droid too broad**: Narrow the focus areas
 - **Skipping steps**: Make workflow more explicit
 - **Inconsistent output**: Define output format more clearly
 - **Overstepping bounds**: Add or clarify constraints
 - **Not automatically invoked**: Improve description field with trigger keywords
 </common_issues>
-</testing_subagents>
+</testing_droids>
 
 <quick_reference>
 ```markdown
 ---
-name: subagent-name
+name: droid-name
 description: What it does and when to use it. Include trigger keywords.
 tools: Tool1, Tool2, Tool3
 model: sonnet

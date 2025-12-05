@@ -54,13 +54,13 @@ Search queries (use WebSearch):
 
 ### Pitfall 4: Tool-Specific Variations
 **What**: Conflating capabilities across different tools/environments
-**Example**: "Claude Desktop supports X" ≠ "Claude Code supports X"
+**Example**: "Droid Desktop supports X" ≠ "Factory CLI supports X"
 **Why it happens**: Not explicitly checking each environment separately
 **Prevention**:
 ```xml
 <verification_checklist>
-□ Claude Desktop capabilities
-□ Claude Code capabilities
+□ Droid Desktop capabilities
+□ Factory CLI capabilities
 □ VS Code extension capabilities
 □ API/SDK capabilities
 Document which environment supports which features
